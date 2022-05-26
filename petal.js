@@ -1,5 +1,7 @@
 import { getAngles, getDistances, getPoints, getRandom } from './utils.js'
 
+const G = 9.8
+
 class Petal {
   constructor(x, y, stageHeight, treeWidth) {
     this.t = 0
@@ -7,6 +9,9 @@ class Petal {
     this.wv = getRandom(-20, 20)
     this.x = this.initialX = x + getRandom(-(this.initialW * 4), (this.initialW * 4))
     this.y = this.initialY = y + getRandom(-(this.initialW * 4), (this.initialW * 4))
+    this.vy = 0
+    this.m = getRandom(45, 55)
+    this.c = getRandom(180, 220)
     this.h = this.initialH = treeWidth / 70
     this.rotation = getRandom(0, 2 * Math.PI)
     this.rDirection = Math.random() < 0.5
@@ -36,8 +41,9 @@ class Petal {
   }
 
   move() {
-    this.y  = (this.t * (this.initialW / 2)) + this.initialY
-    this.x += getRandom(-2, 2)
+    this.vy = ((this.m * G) / this.c) + (-((this.m * G) / this.c) * Math.exp(-(this.c / this.m) * (this.t / 8)))
+    this.y += this.vy
+    this.x += getRandom(-(this.initialW / 2), (this.initialW / 4))
   }
 
   scale() {
