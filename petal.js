@@ -64,10 +64,10 @@ class Petal {
 
   setGradient(ctx) {
     this.gradient = ctx.createLinearGradient(
-      this.x,
-      this.y - (this.h / 2),
-      this.x,
-      this.y + (this.h / 2)
+      this.x + (Math.cos(this.rotation) * (this.h / 2)),
+      this.y + (Math.sin(this.rotation) * (this.h / 2)),
+      this.x + (Math.cos(Math.PI + this.rotation) * (this.h / 2)),
+      this.y + (Math.sin(Math.PI + this.rotation) * (this.h / 2))
     );
 
     if (this.opacity < this.finalOpacity) {
