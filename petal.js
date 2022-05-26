@@ -52,10 +52,6 @@ class Petal {
     } else {
       this.rotation += v
     }
-
-    if (this.rotation > 2 * Math.PI) {
-      this.rotation = this.rotation % (2 * Math.PI)
-    }
   }
 
   setGradient(ctx) {
