@@ -41,35 +41,14 @@ class App {
     this.canvas.height = this.stageHeight * this.pixelRatio
 
     this.ctx.scale(this.pixelRatio, this.pixelRatio)
-
-    // this.tree = new Image()
-    // this.tree.onload = function() {
-    //   console.log('hi')
-    //   this.ctx.drawImage(
-    //     this.tree,
-    //     this.stageWidth - this.treeWidth,
-    //     this.stageHeight -  this.treeHeight,
-    //     this.treeWidth,
-    //     this.treeHeight,
-    //   )
-    // }
-    // this.tree.src = './tree.png'
-
   }
 
   animate() {
     window.requestAnimationFrame(this.animate.bind(this))
     this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight)
-    // this.ctx.drawImage(
-    //   this.tree,
-    //   this.stageWidth - this.treeWidth,
-    //   0,
-    //   this.treeWidth,
-    //   this.treeHeight,
-    // )
 
     this.petals = this.petals.filter(petal => petal.animate(this.ctx))
-}
+  }
 
   handleClick(e) {
     if (this.stageWidth - this.treeWidth > e.clientX || this.treeHeight < e.clientY) {

@@ -24,19 +24,15 @@ class Petal {
   animate(ctx) {
     this.t += 1
     this.move()
-    this.scale()
-    this.rotate()
-
+    
     if (this.y > this.stageHeight + this.initialH) {
       return false
     }
 
-    const angles = getAngles(this.w, this.h, this.rotation)
-    const distances = getDistances(this.w, this.h)
-    const points = getPoints(this.x, this.y, distances, angles)
+    this.rotate()
 
     this.setGradient(ctx)
-    this.draw(ctx, points)
+    this.draw(ctx)
     ctx.fill();
     return true
   }
@@ -48,12 +44,12 @@ class Petal {
     this.x += getRandom(-(this.initialW / 3), (this.initialW / 6))
   }
 
-  scale() {
+  rotate() {
+    // Rotate around the y-axis
     this.wv += getRandom(-2, 2)
     this.w = this.initialW * Math.cos((this.t + this.wv) / 20)
-  }
 
-  rotate() {
+    // Rotate around the z-axis
     const v = getRandom(0.05, 0.4)
     if (this.turnLeft) {
       this.rotation -= v
@@ -78,7 +74,11 @@ class Petal {
     ctx.fillStyle = this.gradient;
   }
 
-  draw(ctx, p) {
+  draw(ctx) {
+    const angles = getAngles(this.w, this.h, this.rotation)
+    const distances = getDistances(this.w, this.h)
+    const p = getPoints(this.x, this.y, distances, angles)
+
     ctx.beginPath()
     ctx.moveTo(p[0].x, p[0].y)
     ctx.quadraticCurveTo(
