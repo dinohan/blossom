@@ -10,14 +10,15 @@ class Petal {
     this.x = this.initialX = x + getRandom(-(this.initialW * 4), (this.initialW * 4))
     this.y = this.initialY = y + getRandom(-(this.initialW * 4), (this.initialW * 4))
     this.vy = 0
-    this.m = getRandom(45, 55)
-    this.c = getRandom(180, 220)
+    this.m = getRandom(35, 45) * (this.initialW / 4)
+    this.c = getRandom(220, 260) * (this.initialW / 4)
     this.h = this.initialH = treeWidth / 70
     this.rotation = getRandom(0, 2 * Math.PI)
-    this.rDirection = Math.random() < 0.5
+    this.turnLeft = Math.random() < 0.5
     this.opacity = 0
     this.finalOpacity = getRandom(0.5, 1.1)
     this.stageHeight = stageHeight
+    this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1
   }
 
   animate(ctx) {
@@ -41,9 +42,10 @@ class Petal {
   }
 
   move() {
-    this.vy = ((this.m * G) / this.c) + (-((this.m * G) / this.c) * Math.exp(-(this.c / this.m) * (this.t / 8)))
+    this.vy = ((this.m * G) / this.c) + (-((this.m * G) / this.c) * Math.exp(-(this.c / this.m) * (this.t / 4)))
+    this.vy = this.vy * (this.initialW / 4)
     this.y += this.vy
-    this.x += getRandom(-(this.initialW / 2), (this.initialW / 4))
+    this.x += getRandom(-(this.initialW / 3), (this.initialW / 6))
   }
 
   scale() {
@@ -53,7 +55,7 @@ class Petal {
 
   rotate() {
     const v = getRandom(0.05, 0.4)
-    if (this.rDirection) {
+    if (this.turnLeft) {
       this.rotation -= v
     } else {
       this.rotation += v
